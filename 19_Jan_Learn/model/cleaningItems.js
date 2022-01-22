@@ -19,4 +19,4 @@ const itemSchema = mongoose.Schema( {
     }
 })
 
-module.exports = mongoose.model('Item', itemSchema);
+module.exports = mongoose.model('CleanItem', itemSchema);

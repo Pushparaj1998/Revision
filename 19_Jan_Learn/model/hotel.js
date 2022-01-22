@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-
+const validator = require('validator')
 const workerSchema = mongoose.Schema({
     name: {
         type : String,
@@ -8,12 +8,18 @@ const workerSchema = mongoose.Schema({
     },
     role: {
         type : String,
-        enum: ['Manager','Chef','Waiter','RoomService','Cleaning']
+        enum: ['Manager','Chef','Waiter','Cleaning']
     },
     email: {
         type : String,
         unique : true,
-        message : "Please Enter Vaild Email"
+        required: true,
+        lowercase: true,
+        validate(value){
+            if(!validator.isEmail(value)){
+                throw new Error('Enter the Valid Email Address')
+            }
+        }
     },
     password: {
         type: String,

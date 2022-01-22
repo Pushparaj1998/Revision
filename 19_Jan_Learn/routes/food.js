@@ -1,13 +1,15 @@
 const express = require('express');
 const router = express();
 const Food = require('../controller/foodControl')
-const {authRole} = require('../controller/verifyToken')
-router.get('/getFood',authRole, Food.getFood);
+const {auth} = require('../controller/verifyToken')
 
-router.post('/createFood',authRole, Food.createFood);
 
-router.put('/updateFood/:id',authRole, Food.updateFood);
+router.get('/getFood',auth, Food.getFood);
 
-router.delete('/deleteFood',authRole, Food.deleteFood);
+router.post('/createFood',auth, Food.createFood);
+
+router.put('/updateFood/:id',auth, Food.updateFood);
+
+router.delete('/deleteFood/:id',auth, Food.deleteFood);
 
 module.exports = router;

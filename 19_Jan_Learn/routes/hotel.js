@@ -2,15 +2,15 @@
 const express = require('express');
 const router  = express();
 const Workers  = require('../controller/hotelControl')
+const {auth} = require('../controller/verifyToken')
 
+router.get('/getWorkers',  Workers.getWorkers )
 
-router.get('/getWorkers', Workers.getWorkers )
+router.post('/createWorker',auth, Workers.createWorker);
 
-router.post('/createWorker', Workers.createWorker);
+router.put('/updateWorker/:id',auth, Workers.updateWorker);
 
-router.put('/updateWorker', Workers.updateWorker);
-
-router.delete('/deleteWorker', Workers.deleteWorker);
+router.delete('/deleteWorker/:id',auth, Workers.deleteWorker);
 
 router.post('/loginWorker', Workers.loginWorker);
 

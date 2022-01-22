@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 
-const authRole = async (req,res,next) => {
+const auth = async (req,res,next) => {
     const token = req.header('auth-token');
     if(!token) return res.status(401).send("Access Denied");
 
@@ -13,4 +13,4 @@ const authRole = async (req,res,next) => {
     }
 }
 
-module.exports = {authRole}
+module.exports = {auth}
