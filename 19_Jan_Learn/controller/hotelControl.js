@@ -5,14 +5,14 @@ const Workers = require('../model/hotel');
 //getWorkers
 const getWorkers = async (req, res) => {
     try {
-        const token = await req.header('auth-token');
-        const decoded = await jwt.decode(token);
-        if (decoded.role == 'Manager') {
+        // const token = await req.header('auth-token');
+        // const decoded = await jwt.decode(token);
+        // if (decoded.role == 'Manager') {
             const workers = await Workers.find();
             res.status(200).json(workers);
-        } else {
-            res.status(401).send('Access Denied');
-        }
+        // } else {
+        //     res.status(401).send('Access Denied');
+        // }
     } catch (error) {
         res.status(400).send(`Error ${error}`)
     }
@@ -66,7 +66,7 @@ const updateWorker = async (req, res) => {
             worker.role = body.role;
             if(body.email)
             worker.email = body.email;
-            if(hashPassword)
+            if(password)
             worker.password = hashPassword;
             res.status(200).json(await worker.save());
         }else{
@@ -97,11 +97,11 @@ const loginWorker = async (req, res) => {
         if (!checkPass) return res.status(400).send("Invalid Password");
         //create and assign Token
         const token = await jwt.sign({ role: checkEmail.role }, process.env.TokenSecret);
-        // res.header('Auth-token', token).send(token);
-        res.cookie('token', token, {
-            maxAge : 1000*60*60,
-            httpOnly : true
-        }).json({succes: true, cookie: token})
+        res.header('Auth-token', token).send(token);
+        // res.cookie('token', token, {
+        //     maxAge : 1000*60*60,
+        //     httpOnly : true
+        // }).json({succes: true, cookie: token})
     } catch (error) {
 
     }
